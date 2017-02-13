@@ -1,0 +1,73 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/site.master" AutoEventWireup="true" CodeFile="site-sub.master.cs" Inherits="site_sub" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="slide" runat="Server">
+    <asp:ContentPlaceHolder ID="slide" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="aside">
+        <section class="danh-muc">
+            <h2>Danh mục sản phẩm</h2>
+            <ul>
+                <li><a href="#">Bán cầu một khối</a></li>
+                <li><a href="#">Bán cầu hai khối</a></li>
+                <li><a href="#">Lavabo</a>
+                    <ul>
+                        <li><a href="#">Lavabo âm bàn</a></li>
+                        <li><a href="#">Lavabo dương bàn</a></li>
+                        <li><a href="#">Lavabo treo tường</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Vòi nước</a></li>
+                <li><a href="#">Phụ kiện</a></li>
+                <li><a href="#">Bệ tiểu</a></li>
+            </ul>
+        </section>
+        <section class="qc">
+            <a href="#">
+                <img src="assets/images/qc.jpg" alt="" /></a>
+            <div class="hotline">
+                <p>Hotline <span>0837 543 395</span></p>
+            </div>
+        </section>
+        <section class="tintuc-nb">
+            <h2>tin tức nổi bật</h2>
+            <div class="item">
+                <img src="assets/images/tt-1.jpg" alt="" />
+                <p><a href="#">Cách chọn mua thiết bị vệ sinh, sự lựa chọn thông minh của các bà nội trợ.</a></p>
+            </div>
+            <div class="item">
+                <img src="assets/images/tt-2.jpg" alt="" />
+                <p><a href="#">Những cách chọn gạch lát nền cho ngôi nhà thêm đẹp.</a></p>
+            </div>
+            <div class="item">
+                <img src="assets/images/tt-3.jpg" alt="" />
+                <p><a href="#">Phòng tắm đẹp nhờ biết biến tấu gạch lát.</a></p>
+            </div>
+            <div class="item">
+                <img src="assets/images/tt-4.jpg" alt="" />
+                <p><a href="#">Xu hướng gạch ốp lát vệ sinh 20147.</a></p>
+            </div>
+            <div class="item">
+                <img src="assets/images/tt-5.jpg" alt="" />
+                <p><a href="#">Thị trường gạch ốp lát trong nước: Hàng nội chiếm ưu thế.</a></p>
+            </div>
+        </section>
+        <section class="tktc">
+            <h2>Thống kê truy cập</h2>
+            <ul>
+                <li>Tổng truy cập <span>59.004</span></li>
+                <li>Đang online <span>2</span></li>
+            </ul>
+        </section>
+    </div>
+    <div class="main-wrap">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</asp:Content>
+

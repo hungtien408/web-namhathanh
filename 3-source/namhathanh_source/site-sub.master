@@ -1,0 +1,230 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/site.master" AutoEventWireup="true" CodeFile="site-sub.master.cs" Inherits="site_sub" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="slide" runat="Server">
+    <asp:ContentPlaceHolder ID="slide" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="aside">
+        <asp:ListView ID="lstProductCategory" runat="server" DataSourceID="odsProductCategory"
+            EnableModelValidation="True">
+            <ItemTemplate>
+                <section class="danh-muc">
+                    <h2><%# Eval("ProductCategoryName") %></h2>
+                    <asp:HiddenField ID="hdnParentIDSub" runat="server" Value='<%# Eval("ProductCategoryID")%>' />
+                    <asp:ListView ID="lstProductCategorySub" runat="server" DataSourceID="odsProductCategorySub"
+                        EnableModelValidation="True">
+                        <ItemTemplate>
+                            <li><a href='<%# progressTitle(Eval("ProductCategoryName")) + "-pci-" + Eval("ProductCategoryID") + ".aspx" %>'><%# Eval("ProductCategoryName")%></a>
+                                <asp:HiddenField ID="hdnParentIDSub2" runat="server" Value='<%# Eval("ProductCategoryID")%>' />
+                                <asp:ListView ID="lstProductCategorySub2" runat="server" DataSourceID="odsProductCategorySub2"
+                                    EnableModelValidation="True">
+                                    <ItemTemplate>
+                                        <li><a href='<%# progressTitle(Eval("ProductCategoryName")) + "-pci-" + Eval("ProductCategoryID") + ".aspx" %>'><%# Eval("ProductCategoryName")%></a></li>
+                                    </ItemTemplate>
+                                    <LayoutTemplate>
+                                        <ul>
+                                            <li runat="server" id="itemPlaceholder"></li>
+                                        </ul>
+                                    </LayoutTemplate>
+                                </asp:ListView>
+                                <asp:ObjectDataSource ID="odsProductCategorySub2" runat="server"
+                                    SelectMethod="ProductCategorySelectAll" TypeName="TLLib.ProductCategory">
+                                    <SelectParameters>
+                                        <asp:ControlParameter ControlID="hdnParentIDSub2" Name="parentID" PropertyName="Value"
+                                            Type="Int32" />
+                                        <asp:Parameter DefaultValue="1" Name="increaseLevelCount" Type="Int32" />
+                                        <asp:Parameter Name="IsShowOnMenu" Type="String" />
+                                        <asp:Parameter Name="IsShowOnHomePage" Type="String" />
+                                    </SelectParameters>
+                                </asp:ObjectDataSource>
+                            </li>
+                        </ItemTemplate>
+                        <LayoutTemplate>
+                            <ul>
+                                <li runat="server" id="itemPlaceholder"></li>
+                            </ul>
+                        </LayoutTemplate>
+                    </asp:ListView>
+                    <asp:ObjectDataSource ID="odsProductCategorySub" runat="server"
+                        SelectMethod="ProductCategorySelectAll" TypeName="TLLib.ProductCategory">
+                        <SelectParameters>
+                            <asp:ControlParameter ControlID="hdnParentIDSub" Name="parentID" PropertyName="Value" Type="Int32" />
+                            <asp:Parameter DefaultValue="1" Name="increaseLevelCount" Type="Int32" />
+                            <asp:Parameter Name="IsShowOnMenu" Type="String" />
+                            <asp:Parameter Name="IsShowOnHomePage" Type="String" />
+                        </SelectParameters>
+                    </asp:ObjectDataSource>
+                </section>
+            </ItemTemplate>
+            <LayoutTemplate>
+                <span runat="server" id="itemPlaceholder" />
+            </LayoutTemplate>
+        </asp:ListView>
+        <asp:ObjectDataSource ID="odsProductCategory" runat="server"
+            SelectMethod="ProductCategorySelectAll" TypeName="TLLib.ProductCategory">
+            <SelectParameters>
+                <asp:Parameter Name="parentID" Type="Int32" />
+                <asp:Parameter DefaultValue="1" Name="increaseLevelCount" Type="Int32" />
+                <asp:Parameter Name="IsShowOnMenu" Type="String" />
+                <asp:Parameter Name="IsShowOnHomePage" Type="String" />
+            </SelectParameters>
+        </asp:ObjectDataSource>
+
+        <section class="qc">
+            <asp:ListView ID="lstBannerSub" runat="server" DataSourceID="odsBannerSub"
+                EnableModelValidation="True">
+                <ItemTemplate>
+                    <a href='<%# Eval("Website") %>'>
+                        <img alt='<%# Eval("FileName") %>' src='<%# "~/res/advertisement/" + Eval("FileName") %>' visible='<%# string.IsNullOrEmpty( Eval("FileName").ToString()) ? false : true %>'
+                            runat="server" /></a>
+                </ItemTemplate>
+                <LayoutTemplate>
+                    <span runat="server" id="itemPlaceholder" />
+                </LayoutTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="odsBannerSub" runat="server" SelectMethod="AdsBannerSelectAll"
+                TypeName="TLLib.AdsBanner">
+                <SelectParameters>
+                    <asp:Parameter Name="StartRowIndex" Type="String" />
+                    <asp:Parameter Name="EndRowIndex" Type="String" />
+                    <asp:Parameter DefaultValue="6" Name="AdsCategoryID" Type="String" />
+                    <asp:Parameter Name="CompanyName" Type="String" />
+                    <asp:Parameter Name="Website" Type="String" />
+                    <asp:Parameter Name="FromDate" Type="String" />
+                    <asp:Parameter Name="ToDate" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="IsAvailable" Type="String" />
+                    <asp:Parameter Name="Priority" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="SortByPriority" Type="String" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
+            <div class="hotline">
+                <asp:ListView ID="lstHotline" runat="server" DataSourceID="odsHotline"
+                    EnableModelValidation="True">
+                    <ItemTemplate>
+                        <p>Hotline <span><%# Eval("ProjectTitle") %></span></p>
+                    </ItemTemplate>
+                    <LayoutTemplate>
+                        <span runat="server" id="itemPlaceholder" />
+                    </LayoutTemplate>
+                </asp:ListView>
+                <asp:ObjectDataSource ID="odsHotline" runat="server" SelectMethod="ProjectSelectAll" TypeName="TLLib.Project">
+                    <SelectParameters>
+                        <asp:Parameter DefaultValue="1" Name="StartRowIndex" Type="String" />
+                        <asp:Parameter DefaultValue="1" Name="EndRowIndex" Type="String" />
+                        <asp:Parameter Name="Keyword" Type="String" />
+                        <asp:Parameter Name="ProjectTitle" Type="String" />
+                        <asp:Parameter Name="Description" Type="String" />
+                        <asp:Parameter DefaultValue="4" Name="ProjectCategoryID" Type="String" />
+                        <asp:Parameter Name="Tag" Type="String" />
+                        <asp:Parameter Name="IsHot" Type="String" />
+                        <asp:Parameter Name="IsNew" Type="String" />
+                        <asp:Parameter Name="IsShowOnHomePage" Type="String" />
+                        <asp:Parameter Name="FromDate" Type="String" />
+                        <asp:Parameter Name="ToDate" Type="String" />
+                        <asp:Parameter DefaultValue="True" Name="IsAvailable" Type="String" />
+                        <asp:Parameter Name="Priority" Type="String" />
+                        <asp:Parameter DefaultValue="True" Name="SortByPriority" Type="String" />
+                    </SelectParameters>
+                </asp:ObjectDataSource>
+            </div>
+        </section>
+        <section class="tintuc-nb">
+            <h2>tin tức nổi bật</h2>
+            <asp:ListView ID="lstTinTucHot" runat="server" DataSourceID="odsTinTucHot"
+                EnableModelValidation="True">
+                <ItemTemplate>
+                    <div class="item">
+                        <img alt='<%# Eval("ImageName") %>' src='<%# "~/res/project/" + Eval("ImageName") %>' visible='<%# string.IsNullOrEmpty( Eval("ImageName").ToString()) ? false : true %>' runat="server" />
+                        <p><a href='<%# progressTitle(Eval("ProjectTitle")) + "-tt-" + Eval("ProjectID") + ".aspx" %>'><%# Eval("ProjectTitle") %></a></p>
+                    </div>
+                </ItemTemplate>
+                <LayoutTemplate>
+                    <span runat="server" id="itemPlaceholder" />
+                </LayoutTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="odsTinTucHot" runat="server" SelectMethod="ProjectSelectAll" TypeName="TLLib.Project">
+                <SelectParameters>
+                    <asp:Parameter Name="StartRowIndex" Type="String" />
+                    <asp:Parameter Name="EndRowIndex" Type="String" />
+                    <asp:Parameter Name="Keyword" Type="String" />
+                    <asp:Parameter Name="ProjectTitle" Type="String" />
+                    <asp:Parameter Name="Description" Type="String" />
+                    <asp:Parameter DefaultValue="2" Name="ProjectCategoryID" Type="String" />
+                    <asp:Parameter Name="Tag" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="IsHot" Type="String" />
+                    <asp:Parameter Name="IsNew" Type="String" />
+                    <asp:Parameter Name="IsShowOnHomePage" Type="String" />
+                    <asp:Parameter Name="FromDate" Type="String" />
+                    <asp:Parameter Name="ToDate" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="IsAvailable" Type="String" />
+                    <asp:Parameter Name="Priority" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="SortByPriority" Type="String" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
+        </section>
+        <section class="tktc">
+            <h2>Thống kê truy cập</h2>
+            <ul>
+                <li>Tổng truy cập <span><%= Application["TatCa"] %></span></li>
+                <li>Đang online <span><%= Application["visitors_online"] %></span></li>
+            </ul>
+        </section>
+        <div class="follow">
+            Follow us: 
+            <asp:ListView ID="ListView1" runat="server" DataSourceID="odsHotline"
+                EnableModelValidation="True">
+                <ItemTemplate>
+                    <a target="_blank" href='<%# Eval("Tag") %>'><span>
+                        <img src="assets/images/follow1.png" /></span></a>
+                </ItemTemplate>
+                <LayoutTemplate>
+                    <span runat="server" id="itemPlaceholder" />
+                </LayoutTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="ProjectSelectAll" TypeName="TLLib.Project">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="1" Name="StartRowIndex" Type="String" />
+                    <asp:Parameter DefaultValue="1" Name="EndRowIndex" Type="String" />
+                    <asp:Parameter Name="Keyword" Type="String" />
+                    <asp:Parameter Name="ProjectTitle" Type="String" />
+                    <asp:Parameter Name="Description" Type="String" />
+                    <asp:Parameter DefaultValue="4" Name="ProjectCategoryID" Type="String" />
+                    <asp:Parameter Name="Tag" Type="String" />
+                    <asp:Parameter Name="IsHot" Type="String" />
+                    <asp:Parameter Name="IsNew" Type="String" />
+                    <asp:Parameter Name="IsShowOnHomePage" Type="String" />
+                    <asp:Parameter Name="FromDate" Type="String" />
+                    <asp:Parameter Name="ToDate" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="IsAvailable" Type="String" />
+                    <asp:Parameter Name="Priority" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="SortByPriority" Type="String" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
+            <%--<span>
+                    <img src="assets/images/follow2.png"/></span> <a target="_blank" href="#">
+                        <span>
+                            <img src="assets/images/follow3.png"/></span></a>--%>
+        </div>
+        <div class="follow">
+            <div class="fb-page"></div>
+            <div id="fb-root"></div>
+            <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+        </div>
+    </div>
+    <div class="main-wrap">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</asp:Content>
+
